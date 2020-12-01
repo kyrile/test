@@ -1,19 +1,11 @@
 const { app, BrowserWindow } = require('electron')
+const { create:createWindow } = require('./windows/mian')
+const handleIpc = require('./ipc')
 
-function createWindow () {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  })
-
-  win.loadURL('http://localhost:8080')
-  win.webContents.openDevTools()
-}
-
-app.whenReady().then(createWindow)
+app.on('ready', () => {
+  createWindow()
+  handleIpc()
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -24,5 +16,6 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
+  
   }
 })
