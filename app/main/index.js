@@ -7,7 +7,7 @@ app.on('ready', () => {
   handleIpc()
 })
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed',() => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
@@ -16,6 +16,5 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
-  
   }
 })
